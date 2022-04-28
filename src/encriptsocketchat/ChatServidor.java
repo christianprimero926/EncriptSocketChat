@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
-import java.util.Random;
 import java.util.StringTokenizer;
 
 /**
@@ -22,6 +20,8 @@ import java.util.StringTokenizer;
 public class ChatServidor extends javax.swing.JFrame {
 
     private static String tipoAlgoritmo;
+    public final static String str1 = "!#$;*/=&?¿+_¡@*-°1234567890!#$;*/=&?¿+_¡@*-°1234567890";
+    public final static String str2 = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
 
     static ServerSocket ss;
     static ServerSocket ss2;
@@ -90,27 +90,12 @@ public class ChatServidor extends javax.swing.JFrame {
         jPanel4.setLayout(new java.awt.GridLayout(3, 2));
 
         jRadioButtonTransposicion.setText("Transposición");
-        jRadioButtonTransposicion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonTransposicionActionPerformed(evt);
-            }
-        });
         jPanel4.add(jRadioButtonTransposicion);
 
         jRadioButtonSustitucion.setText("Sustitución");
-        jRadioButtonSustitucion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonSustitucionActionPerformed(evt);
-            }
-        });
         jPanel4.add(jRadioButtonSustitucion);
 
         jRadioButtonRSA.setText("RSA");
-        jRadioButtonRSA.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonRSAActionPerformed(evt);
-            }
-        });
         jPanel4.add(jRadioButtonRSA);
 
         jRadioButton4.setText("Otro...");
@@ -120,12 +105,6 @@ public class ChatServidor extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Envio de Mensaje"));
         jPanel3.setPreferredSize(new java.awt.Dimension(100, 66));
-
-        jTextFieldMsg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldMsgActionPerformed(evt);
-            }
-        });
 
         jButtonEnviar.setText("Enviar");
         jButtonEnviar.setVerifyInputWhenFocusTarget(false);
@@ -166,14 +145,33 @@ public class ChatServidor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
-        if (jRadioButtonTransposicion.isSelected()) {
+        try {
 
-        } else if (jRadioButtonSustitucion.isSelected()) {
+            if (jRadioButtonTransposicion.isSelected()) {
 
-        } else if (jRadioButtonRSA.isSelected()) {
-            tipoAlgoritmo = "RSA";
+            } else if (jRadioButtonSustitucion.isSelected()) {
+                jRadioButtonRSA.setSelected(false);
+                jRadioButtonTransposicion.setSelected(false);
+                tipoAlgoritmo = "Sustitucion";
 
-            try {
+                String msg;
+                String msgEncript;
+                msg = jTextFieldMsg.getText();
+                msgEncript = jTextFieldMsg.getText();
+                jTextFieldMsg.setText("");
+
+                for (int i = 0; i < str1.length(); i++) {
+                    msgEncript = msgEncript.replace(str2.charAt(i), str1.charAt(i));
+                }
+                System.out.println("Valor Final encriptado : " + msgEncript);
+                dos.writeUTF(msgEncript);
+                jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Usted: " + msg);
+                dosT.writeUTF(tipoAlgoritmo);
+
+            } else if (jRadioButtonRSA.isSelected()) {
+                jRadioButtonSustitucion.setSelected(false);
+                jRadioButtonTransposicion.setSelected(false);
+                tipoAlgoritmo = "RSA";
                 String msg;
                 String msgFinalEncrip = "";
                 BigInteger[] textoCifrado;
@@ -190,7 +188,6 @@ public class ChatServidor extends javax.swing.JFrame {
 //                jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Mensaje Encriptado con RSA: " + msgFinalEncrip);
                 System.out.println("Valor Final encriptado : " + msgFinalEncrip);
 
-
                 dos.writeUTF(msgFinalEncrip);
 
                 System.out.println("Este es el valor de N: " + cifradoRSA.bigIntObtenerN().toString());
@@ -200,30 +197,20 @@ public class ChatServidor extends javax.swing.JFrame {
                 dosD.writeUTF(cifradoRSA.bigIntObtenerD().toString());
                 dosT.writeUTF(tipoAlgoritmo);
 
-            } catch (IOException ex) {
-                System.out.println("encriptsocketchat.chat1.jButtonDesencriptarActionPerformed()" + ex);
-            }
-        } else {
+            } else {
+                tipoAlgoritmo = "Normal";
+                String msg;
+                msg = jTextFieldMsg.getText();
+                jTextFieldMsg.setText("");
+                dos.writeUTF(msg);
+                jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Usted: " + msg);
+                dosT.writeUTF(tipoAlgoritmo);
 
+            }
+        } catch (IOException ex) {
+            System.out.println("encriptsocketchat.chat1.jButtonDesencriptarActionPerformed()" + ex);
         }
     }//GEN-LAST:event_jButtonEnviarActionPerformed
-
-    private void jRadioButtonTransposicionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonTransposicionActionPerformed
-      
-    }//GEN-LAST:event_jRadioButtonTransposicionActionPerformed
-
-    private void jRadioButtonSustitucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonSustitucionActionPerformed
-       
-    }//GEN-LAST:event_jRadioButtonSustitucionActionPerformed
-
-    private void jRadioButtonRSAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonRSAActionPerformed
-
-    }//GEN-LAST:event_jRadioButtonRSAActionPerformed
-
-    private void jTextFieldMsgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMsgActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldMsgActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -275,12 +262,12 @@ public class ChatServidor extends javax.swing.JFrame {
             ss2 = new ServerSocket(1450);
             ss3 = new ServerSocket(1451);
             ss4 = new ServerSocket(1452);
-            
+
             s = ss.accept();
             s2 = ss2.accept();
             s3 = ss3.accept();
             s4 = ss4.accept();
-            
+
             dis = new DataInputStream(s.getInputStream());
             disN = new DataInputStream(s2.getInputStream());
             disD = new DataInputStream(s3.getInputStream());
@@ -294,29 +281,44 @@ public class ChatServidor extends javax.swing.JFrame {
 
                 msjentrada = dis.readUTF();
                 tipoAlg = disT.readUTF();
-                
+
                 System.out.println("Este es el mensaje del cliente:" + msjentrada); //--- 
-                jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Este es el mensaje del cliente encriptado con " + tipoAlg + ": ");
-                jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Cliente: " + msjentrada);
-                msjRsaN = disN.readUTF();
-                msjRsaD = disD.readUTF();
-                BigInteger rsaN = new BigInteger(msjRsaN);
-                BigInteger rsaD = new BigInteger(msjRsaD);
-
-                System.out.println("Recibí este valor de D: " + msjRsaD);
-                System.out.println("Recibí este valor de N: " + msjRsaN);
-
-                String letra = "";
-                StringTokenizer st = new StringTokenizer(msjentrada);
-                BigInteger[] textoEncriptado = new BigInteger[st.countTokens()];
-                for (int i = 0; i < textoEncriptado.length; i++) {
-                    letra = st.nextToken();
-                    textoEncriptado[i] = new BigInteger(letra);
+                switch (tipoAlg) {
+                    case "Sustitucion":
+                        jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Este es el mensaje del cliente encriptado con " + tipoAlg + ": ");
+                        jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n " + msjentrada);                        
+                        String mensaje = msjentrada;
+                        //System.out.println("\nMensaje cifrado  : " + mensaje);
+                        for (int i = 0; i < str1.length(); i++) {
+                            mensaje = mensaje.replace(str1.charAt(i), str2.charAt(i));
+                        }
+                        System.out.println("Valor desencriptado: " + mensaje);
+                        jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Mensaje desencriptado del cliente: " + mensaje);                        
+                        break;
+                    case "RSA":
+                        jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Este es el mensaje del cliente encriptado con " + tipoAlg + ": ");
+                        jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n " + msjentrada);
+                        msjRsaN = disN.readUTF();
+                        msjRsaD = disD.readUTF();
+                        BigInteger rsaN = new BigInteger(msjRsaN);
+                        BigInteger rsaD = new BigInteger(msjRsaD);
+                        System.out.println("Recibí este valor de D: " + msjRsaD);
+                        System.out.println("Recibí este valor de N: " + msjRsaN);
+                        String letra = "";
+                        StringTokenizer st = new StringTokenizer(msjentrada);
+                        BigInteger[] textoEncriptado = new BigInteger[st.countTokens()];
+                        for (int i = 0; i < textoEncriptado.length; i++) {
+                            letra = st.nextToken();
+                            textoEncriptado[i] = new BigInteger(letra);
+                        }
+                        msgDesencriptado = cifradoRSA.desencripta(textoEncriptado, rsaD, rsaN);
+                        System.out.println("Valor desencriptado: " + msgDesencriptado);
+                        jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Mensaje desencriptado del cliente: " + msgDesencriptado);
+                        break;
+                    default:
+                        jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Cliente: " + msjentrada);
+                        break;
                 }
-                msgDesencriptado = cifradoRSA.desencripta(textoEncriptado, rsaD, rsaN);
-                System.out.println("Valor desencriptado: " + msgDesencriptado);
-
-                jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Mensaje Desencriptado del cliente: " + msgDesencriptado);
 
             }
 
