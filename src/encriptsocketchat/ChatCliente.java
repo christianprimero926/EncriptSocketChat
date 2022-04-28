@@ -9,8 +9,6 @@ import TRANSPOSICION.Transposicion;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -23,7 +21,7 @@ import java.util.StringTokenizer;
 public class ChatCliente extends javax.swing.JFrame {
 
     private static String tipoAlgoritmo;
-    private static final String host = "localhost";
+    private static final String host = "192.168.1.20";
     public final static String str1 = "!#$;*/=&?¿+_¡@*-°1234567890!#$;*/=&?¿+_¡@*-°1234567890";
     public final static String str2 = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
 
@@ -31,12 +29,12 @@ public class ChatCliente extends javax.swing.JFrame {
     static ServerSocket ss2;
     static ServerSocket ss3;
     static ServerSocket ss4;
-    
+
     static Socket s;
     static Socket s2;
     static Socket s3;
     static Socket s4;
-    
+
     static DataInputStream dis;
     static DataInputStream disN;
     static DataInputStream disD;
@@ -165,9 +163,9 @@ public class ChatCliente extends javax.swing.JFrame {
 
                 jTextFieldMsg.setText("");
                 msgEncript = new String(c = crifradoTransposicion.encripta(msg.getBytes()));
-                
+
                 System.out.println("Valor Final encriptado : " + msgEncript);
-                dos.writeUTF(msgEncript);                
+                dos.writeUTF(msgEncript);
                 jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Usted: " + msg);
                 dosT.writeUTF(tipoAlgoritmo);
 
@@ -278,38 +276,35 @@ public class ChatCliente extends javax.swing.JFrame {
             s2 = new Socket(host, 1450);
             s3 = new Socket(host, 1451);
             s4 = new Socket(host, 1452);
-            
 
             dis = new DataInputStream(s.getInputStream());
             disN = new DataInputStream(s2.getInputStream()); // N va por el puerto 1450
             disD = new DataInputStream(s3.getInputStream()); // D va por el puerto 1451
             disT = new DataInputStream(s4.getInputStream()); // Tipo de Algoritmo va por el puerto 1452            
-            
+
             dos = new DataOutputStream(s.getOutputStream());
             dosN = new DataOutputStream(s2.getOutputStream());
             dosD = new DataOutputStream(s3.getOutputStream());
             dosT = new DataOutputStream(s4.getOutputStream());
-            
-            
+
             while (!msjentrada.equals("Exit")) {
-                
 
                 //ladoCliente ld = new ladoCliente();
                 msjentrada = dis.readUTF(); //-- aqui si lo hace
-                tipoAlg = disT.readUTF();                
+                tipoAlg = disT.readUTF();
 
                 System.out.println("Este es el mensaje del servidor:" + msjentrada); //---                 
                 switch (tipoAlg) {
                     case "Transposicion":
-                        jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Este es el mensaje del cliente encriptado con " + tipoAlg + ": ");
+                        jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Este es el mensaje del servidor encriptado con " + tipoAlg + ": ");
                         jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n " + msjentrada);
 
                         String mensajeTran = new String(crifradoTransposicion.desencripta(msjentrada.getBytes()));
                         System.out.println("Valor desencriptado: " + mensajeTran);
-                        jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Mensaje desencriptado del cliente: " + mensajeTran);
+                        jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Mensaje desencriptado del servidor: " + mensajeTran);
                         break;
                     case "Sustitucion":
-                        jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Este es el mensaje del cliente encriptado con " + tipoAlg + ": ");
+                        jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Este es el mensaje del servidor encriptado con " + tipoAlg + ": ");
                         jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n " + msjentrada);
                         String mensaje = msjentrada;
                         //System.out.println("\nMensaje cifrado  : " + mensaje);
@@ -317,7 +312,7 @@ public class ChatCliente extends javax.swing.JFrame {
                             mensaje = mensaje.replace(str1.charAt(i), str2.charAt(i));
                         }
                         System.out.println("Valor desencriptado: " + mensaje);
-                        jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Mensaje desencriptado del cliente: " + mensaje);
+                        jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Mensaje desencriptado del servidor: " + mensaje);
                         break;
                     case "RSA":
                         jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Este es el mensaje del servidor encriptado con " + tipoAlg + ": ");

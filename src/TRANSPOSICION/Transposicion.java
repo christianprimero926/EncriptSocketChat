@@ -4,9 +4,6 @@
  */
 package TRANSPOSICION;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.Socket;
 
 /**
@@ -14,7 +11,7 @@ import java.net.Socket;
  * @author chris
  */
 public class Transposicion {
-    
+
     private Socket socket;
 
     public byte[] encripta(byte[] m) {
@@ -60,29 +57,4 @@ public class Transposicion {
 
         return m;
     }
-
-    public void sendBytes(byte[] myByteArray) throws IOException {
-        sendBytes(myByteArray, 0, myByteArray.length);
-    }
-
-    public void sendBytes(byte[] myByteArray, int start, int len) throws IOException {
-        if (len < 0) {
-            throw new IllegalArgumentException("Negative length not allowed");
-        }
-        if (start < 0 || start >= myByteArray.length) {
-            throw new IndexOutOfBoundsException("Out of bounds: " + start);
-        }
-        // Other checks if needed.
-
-        // May be better to save the streams in the support class;
-        // just like the socket variable.
-        OutputStream out = socket.getOutputStream();
-        DataOutputStream dos = new DataOutputStream(out);
-
-        dos.writeInt(len);
-        if (len > 0) {
-            dos.write(myByteArray, start, len);
-        }
-    }
-
 }

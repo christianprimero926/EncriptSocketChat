@@ -9,13 +9,10 @@ import TRANSPOSICION.Transposicion;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.StringTokenizer;
-import javax.net.ServerSocketFactory;
 
 /**
  *
@@ -156,15 +153,13 @@ public class ChatServidor extends javax.swing.JFrame {
         try {
 
             if (jRadioButtonTransposicion.isSelected()) {
-//                jRadioButtonRSA.setSelected(false);
-//                jRadioButtonSustitucion.setSelected(false);
                 tipoAlgoritmo = "Transposicion";
-                String msg;
-                String msgEncript;
+                String msg; // Mensaje original.
+                String msgEncript; // Mensaje encriptado.
                 msg = jTextFieldMsg.getText();
                 byte[] c;
 
-                jTextFieldMsg.setText("");
+                jTextFieldMsg.setText(""); // Limpia el campo.
                 msgEncript = new String(c = crifradoTransposicion.encripta(msg.getBytes()));
                 
                 System.out.println("Valor Final encriptado : " + msgEncript);
@@ -173,8 +168,6 @@ public class ChatServidor extends javax.swing.JFrame {
                 dosT.writeUTF(tipoAlgoritmo);
 
             } else if (jRadioButtonSustitucion.isSelected()) {
-//                jRadioButtonRSA.setSelected(false);
-//                jRadioButtonTransposicion.setSelected(false);
                 tipoAlgoritmo = "Sustitucion";
 
                 String msg;
@@ -192,8 +185,6 @@ public class ChatServidor extends javax.swing.JFrame {
                 dosT.writeUTF(tipoAlgoritmo);
 
             } else if (jRadioButtonRSA.isSelected()) {
-//                jRadioButtonSustitucion.setSelected(false);
-//                jRadioButtonTransposicion.setSelected(false);
                 tipoAlgoritmo = "RSA";
                 String msg;
                 String msgFinalEncrip = "";
@@ -225,7 +216,7 @@ public class ChatServidor extends javax.swing.JFrame {
                 String msg;
                 msg = jTextFieldMsg.getText();
                 jTextFieldMsg.setText("");
-                dos.writeUTF(msg);
+                dos.writeUTF(msg); // Guarda el mensaje en un DataOutputStream
                 jTextAreaMsg.setText(jTextAreaMsg.getText() + "\n Usted: " + msg);
                 dosT.writeUTF(tipoAlgoritmo);
 
@@ -273,7 +264,7 @@ public class ChatServidor extends javax.swing.JFrame {
             new ChatServidor().setVisible(true);
         });
 
-        try {
+        try { // Para desencriptar inicializa las variables.
 
             String msgDesencriptado = "";
             String msjentrada = "";
@@ -287,7 +278,7 @@ public class ChatServidor extends javax.swing.JFrame {
             ss4 = new ServerSocket(1452);
             
 
-            s = ss.accept();
+            s = ss.accept(); // Para aceptar la conexión... 
             s2 = ss2.accept();
             s3 = ss3.accept();
             s4 = ss4.accept();
