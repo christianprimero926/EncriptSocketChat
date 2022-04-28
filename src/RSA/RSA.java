@@ -12,8 +12,6 @@ import java.util.Random;
  * @author chris
  */
 public class RSA {
-
-    // * Algoritmo RSA
     int tamPrimo;
     private BigInteger n, p, q;
     private BigInteger phi;

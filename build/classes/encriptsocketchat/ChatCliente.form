@@ -27,7 +27,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Chat"/>
+            <TitledBorder title="Chat Cliente"/>
           </Border>
         </Property>
       </Properties>
@@ -99,25 +99,23 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Transposici&#xf3;n"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonTransposicionActionPerformed"/>
-                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="ChatCliente_jRadioButtonTransposicion"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="jRadioButtonSustitucion">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Sustituci&#xf3;n"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonSustitucionActionPerformed"/>
-                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="jRadioButtonRSA">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="RSA"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonRSAActionPerformed"/>
-                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
                   </AuxValues>
@@ -126,14 +124,6 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Otro..."/>
                   </Properties>
-                </Component>
-                <Component class="javax.swing.JButton" name="jButtonDesencriptar">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Desencriptar"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDesencriptarActionPerformed"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -181,9 +171,6 @@
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JTextField" name="jTextFieldMsg">
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldMsgActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButtonEnviar">
                   <Properties>
